@@ -1,0 +1,69 @@
+### EKS 클러스터 옵션 설명 (한글 번역)
+
+#### 클러스터 접근 및 보안
+- access_entries: 클러스터에 추가할 접근 항목들의 매핑
+- attach_cluster_encryption_policy: 제공된 암호화 키를 사용하도록 클러스터 IAM 역할에 암호화 정책을 추가할지 여부
+- authentication_mode: 클러스터 인증 모드 (CONFIG_MAP, API, API_AND_CONFIG_MAP 중 선택)
+- cluster_additional_security_group_ids: 클러스터 컨트롤 플레인에 추가할 외부 보안 그룹 ID 목록
+- cluster_security_group_id: 클러스터에 연결할 기존 보안 그룹 ID
+- cluster_security_group_name: 생성될 클러스터 보안 그룹의 이름
+- cluster_security_group_tags: 생성된 클러스터 보안 그룹에 추가할 태그
+- cluster_security_group_use_name_prefix: 보안 그룹 이름을 접두어로 사용할지 여부
+- cluster_endpoint_private_access: EKS 프라이빗 API 서버 엔드포인트 활성화 여부
+- cluster_endpoint_public_access: EKS 퍼블릭 API 서버 엔드포인트 활성화 여부
+- cluster_endpoint_public_access_cidrs: 퍼블릭 API 서버에 접근할 수 있는 CIDR 블록 목록
+
+#### 클러스터 설정
+- cluster_name: EKS 클러스터 이름
+- cluster_version: Kubernetes 버전 (<major>.<minor> 형식, 예: 1.27)
+- cluster_ip_family: 클러스터에서 사용하는 IP 패밀리 (ipv4 또는 ipv6)
+- cluster_service_ipv4_cidr: 서비스 IP 할당을 위한 IPv4 CIDR 블록
+- cluster_service_ipv6_cidr: 서비스 IP 할당을 위한 IPv6 CIDR 블록
+- cluster_compute_config: 클러스터 컴퓨팅 설정 블록
+- cluster_addons: 클러스터에서 활성화할 애드온 목록
+- cluster_identity_providers: 클러스터에서 사용할 ID 제공자 매핑
+
+#### 로그 및 모니터링
+- cloudwatch_log_group_class: 로그 그룹 클래스 (STANDARD 또는 INFREQUENT_ACCESS)
+- cloudwatch_log_group_kms_key_id: KMS 키 ARN을 설정하여 로그 그룹을 암호화할 경우 사용하는 키
+- cloudwatch_log_group_retention_in_days: 로그 보관 기간 (기본값: 90일)
+- cloudwatch_log_group_tags: 생성된 클라우드워치 로그 그룹에 추가할 태그
+- cluster_enabled_log_types: 활성화할 컨트롤 플레인 로그 유형 (예: audit, api, authenticator)
+- create_cloudwatch_log_group: 클러스터 로그를 위한 CloudWatch 로그 그룹 생성 여부
+
+#### 암호화 및 KMS 설정
+- create_kms_key: 클러스터 암호화를 위한 KMS 키 생성 여부
+- enable_kms_key_rotation: KMS 키 자동 회전 활성화 여부
+- cluster_encryption_config: 클러스터 암호화 설정 (secrets 암호화 기본 활성화)
+- cluster_encryption_policy_description: 생성되는 클러스터 암호화 정책 설명
+- cluster_encryption_policy_name: 생성되는 암호화 정책의 이름
+- cluster_encryption_policy_tags: 클러스터 암호화 정책에 추가할 태그
+
+#### IAM 역할 및 권한
+- create_iam_role: 클러스터 IAM 역할 생성 여부
+- iam_role_arn: 기존 클러스터 IAM 역할 ARN (생성하지 않을 경우 필요)
+- iam_role_name: 생성할 IAM 역할 이름
+- iam_role_tags: 생성된 IAM 역할에 추가할 태그
+- enable_irsa: IAM 역할 서비스 계정(IRSA) 활성화 여부
+
+#### 노드 그룹 및 네트워크
+- eks_managed_node_groups: EKS 관리형 노드 그룹 정의
+- self_managed_node_groups: 셀프 관리형 노드 그룹 정의
+- subnet_ids: 클러스터 노드 그룹이 배포될 서브넷 ID 목록
+- control_plane_subnet_ids: 클러스터 컨트롤 플레인(ENI)이 배치될 서브넷 ID 목록
+- vpc_id: 클러스터 보안 그룹이 배치될 VPC ID
+
+#### 보안 그룹 및 네트워크 정책
+- node_security_group_id: 노드 그룹에 연결할 기존 보안 그룹 ID
+- node_security_group_name: 생성될 노드 보안 그룹의 이름
+- node_security_group_tags: 생성된 노드 보안 그룹에 추가할 태그
+- enable_security_groups_for_pods: Pod별 보안 그룹을 사용할지 여부
+- node_security_group_enable_recommended_rules: 노드 간 TCP 및 모든 egress 트래픽 허용 여부
+
+#### 기타 옵션
+- putin_khuylo: "푸틴은 우크라이나 주권과 영토를 존중하지 않는다"는 명제에 동의하는지 여부 (기본값: true)
+- create: 리소스를 생성할지 여부 (거의 모든 리소스에 영향)
+- prefix_separator: 리소스 이름을 생성할 때 사용할 접두어 구분자 (기본값: "-")
+- dataplane_wait_duration: 클러스터 활성화 후 데이터플레인 생성까지 대기할 시간 (기본값: 30초)
+
+위 옵션들을 활용하여 EKS 클러스터의 보안, 인증, 네트워크, IAM 역할, 암호화 설정을 세부적으로 조정할 수 있습니다. 필요한 설정을 선택하여 Terraform 또는 AWS CLI에서 적용하면 됩니다.
